@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'dotenv-rails'
+gem 'bootstrap', '~> 4.0.0.alpha6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'

@@ -2,9 +2,13 @@ require 'csv'
 
 class NearbyController < ApplicationController
   def index
-    start_date = Date.parse('2017-03-24')
-    end_date = Date.parse('2017-04-24')
+    start_date = Date.parse(params[:startDate])
+    end_date = Date.parse(params[:endDate])
 
+    start_date2 = Date.parse('2017-03-24')
+    end_date2 = Date.parse('2017-04-24')
+
+Rails.logger.info("start: #{start_date} :: #{start_date2}")
     quakes_felt = []
 
     CSV.foreach('public/all_month.csv', headers: true) do |row|

@@ -1,0 +1,59 @@
+<div id="container">
+  <h2>Was that an Earthquake?</h2>
+  <form class="form-inline">
+    <div class="form-group">
+      <label for="startDate">Start Date:</label>
+      <input type="date" class="form-control" id="startDate">
+    </div>
+    <div class="form-group">
+      <label for="endDate">End Date:</label>
+      <input type="date" class="form-control" id="endDate">
+    </div>
+    <button type="button" id="submit" class="btn btn-default">Submit</button>
+  </form>
+  <table id="results" class="table hidden">
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Place</th>
+        <th>Distance</th>
+        <th>Magnitude</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+
+<script type="text/javascript">
+
+var today = new Date()
+document.getElementById("startDate").valueAsDate = new Date(today.setDate(today.getDate()-30))
+document.getElementById("endDate").valueAsDate = new Date ()
+
+$('#submit').click(() => {
+
+  const startDate = document.getElementById("startDate").value
+  const endDate = document.getElementById("endDate").value
+
+  fetch(`/nearby?startDate=${startDate}&endDate=${endDate}`, {method: 'GET'})
+    .then((response) => response.json())
+    .then((jsonData) => {
+      $('#results').removeClass('hidden')
+      $('#results tbody').html('')
+      console.log({jsonData})
+      if (jsonData.length > 0) {
+        jsonData.forEach((obj) => insertRow(obj))
+      }
+      else {
+        $('#results tbody').append('<div class="no-results">No Results Found</div>')
+      }
+    })
+})
+
+function insertRow (obj) {
+  console.log({obj})
+  $('#results tbody').append(`<tr><td>${obj.date}</td><td>${obj.location}</td><td>${obj.distance}</td><td>${obj.magnitude}</td></tr>`)
+}
+
+</script>
