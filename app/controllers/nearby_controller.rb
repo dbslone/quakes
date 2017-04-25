@@ -1,3 +1,4 @@
+require 'haversine'
 require 'csv'
 
 class NearbyController < ApplicationController
